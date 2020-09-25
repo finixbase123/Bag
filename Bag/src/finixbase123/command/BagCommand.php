@@ -26,12 +26,30 @@ class BagCommand extends Command
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
-        $inv = new BagInventory(new Vector3($sender->x, $sender->y, $sender->z),'BagInventory');
-        $inv->setContents(array_map(function (array $array) {
+        if(!isset($args[0])) {
+            $inv = new BagInventory(new Vector3($sender->x, $sender->y, $sender->z), 'My Inventory');
+            $inv->setContents(array_map(function (array $array) {
 
-            return Item::jsonDeserialize($array);
+                return Item::jsonDeserialize($array);
 
-        }, $this->owner->db[$sender->getName()]['items']));
-        $sender->addWindow($inv);
+            }, $this->owner->db[strtolower($sender->getName())]['items']));
+            $sender->addWindow($inv);
+        }else{
+            if(!$sender->isOp()) {
+                $sender->sendMessage(Bag::PREFIX . '당신에게는 권한이 없습니다.');
+                return false;
+            }
+            if(!isset($this->owner->db[strtolower($args[0])])) {
+                $sender->sendMessage(Bag::PREFIX . '인식되지 않는 플레이어입니다.');
+                return false;
+            }
+            $inv = new BagInventory(new Vector3($sender->x, $sender->y, $sender->z), $args . '\'s Inventory');
+            $inv->setContents(array_map(function (array $array) {
+
+                return Item::jsonDeserialize($array);
+
+            }, $this->owner->db[strtolower($args[0])]['items']));
+            $sender->addWindow($inv);
+        }
     }
 }
