@@ -48,8 +48,8 @@ class Bag extends PluginBase implements Listener
 
     public function onLogin(PlayerLoginEvent $event)
     {
-        if(!isset($this->db[$event->getPlayer()->getName()])) {
-            $this->db[$event->getPlayer()->getName()]['items'] = [];
+        if(!isset($this->db[strtolower($event->getPlayer()->getName())])) {
+            $this->db[strtolower($event->getPlayer()->getName())]['items'] = [];
         }
     }
 
@@ -66,7 +66,7 @@ class Bag extends PluginBase implements Listener
 
         if (! $inv instanceof BagInventory)
             return;
-            $this->db[$player->getName()]['items'] = (array_map(function (Item $item) {
+            $this->db[strtolower($player->getName())]['items'] = (array_map(function (Item $item) {
 
                 return $item->jsonSerialize();
 
