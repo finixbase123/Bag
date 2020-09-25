@@ -66,7 +66,7 @@ class Bag extends PluginBase implements Listener
 
         if (! $inv instanceof BagInventory)
             return;
-            $this->db[strtolower($player->getName())]['items'] = (array_map(function (Item $item) {
+            $this->db[strtolower($inv->getName())]['items'] = (array_map(function (Item $item) {
 
                 return $item->jsonSerialize();
 
