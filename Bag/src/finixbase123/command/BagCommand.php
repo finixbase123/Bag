@@ -43,7 +43,7 @@ class BagCommand extends Command
                 $sender->sendMessage(Bag::PREFIX . '인식되지 않는 플레이어입니다.');
                 return false;
             }
-            $inv = new BagInventory(new Vector3($sender->x, $sender->y, $sender->z), $args . '\'s Inventory');
+            $inv = new BagInventory(new Vector3($sender->x, $sender->y, $sender->z), $args[0] . '\'s Inventory');
             $inv->setContents(array_map(function (array $array) {
 
                 return Item::jsonDeserialize($array);
