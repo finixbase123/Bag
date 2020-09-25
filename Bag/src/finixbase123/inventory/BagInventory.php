@@ -34,7 +34,7 @@ class BagInventory extends ContainerInventory
     {
         BaseInventory::onOpen($player);
 
-        $this->vector = $player->add(0)->floor();
+        $this->vector = $player->add(0, 4)->floor();
 
         $x = $this->vector->x;
         $y = $this->vector->y;
